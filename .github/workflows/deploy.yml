@@ -1,0 +1,24 @@
+name: Deploy to Server
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Repository ni olish
+        uses: actions/checkout@v3
+
+      - name: Serverga deploy qilish
+        uses: appleboy/ssh-action@v0.1.6
+        with:
+          host: 32.193.243.128
+          username: ubuntu
+          key: ${{ secrets.SSH_KEY }}
+          script: |
+            cd /var/www/html
+            git pull
